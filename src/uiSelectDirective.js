@@ -47,6 +47,7 @@ uis.directive('uiSelect',
         //Set reference to ngModel from uiSelectCtrl
         $select.ngModel = ngModel;
 
+
         $select.choiceGrouped = function(group){
           return $select.isGrouped && group && group.name;
         };
@@ -57,6 +58,9 @@ uis.directive('uiSelect',
             element.removeAttr("tabindex");
           });
         }
+
+        scope.$watch('$select.items', function(){
+        });
 
         scope.$watch('searchEnabled', function() {
             var searchEnabled = scope.$eval(attrs.searchEnabled);
@@ -198,6 +202,7 @@ uis.directive('uiSelect',
               resetDropdown();
             }
           });
+
 
           // Move the dropdown back to its original location when the scope is destroyed. Otherwise
           // it might stick around when the user routes away or the select field is otherwise removed
