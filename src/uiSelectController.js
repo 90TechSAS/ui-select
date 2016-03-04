@@ -35,6 +35,7 @@ uis.controller('uiSelectCtrl',
   ctrl.focusser = undefined; //Reference to input element used to handle focus events
   ctrl.resetSearchInput = true;
   ctrl.multiple = undefined; // Initialized inside uiSelect directive link function
+  ctrl.forcePlaceholder= false;
   ctrl.disableChoiceExpression = undefined; // Initialized inside uiSelectChoices directive link function
   ctrl.tagging = {isActivated: false, fct: undefined};
   ctrl.taggingTokens = {isActivated: false, tokens: undefined};
@@ -55,6 +56,9 @@ uis.controller('uiSelectCtrl',
   ctrl.searchInput = $element.querySelectorAll('input.ui-select-search');
   if (ctrl.searchInput.length !== 1) {
     throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", ctrl.searchInput.length);
+  }
+  if($element.attr('force-placeholder') === 'true'){
+    ctrl.forcePlaceholder = true;
   }
 
   ctrl.isEmpty = function() {

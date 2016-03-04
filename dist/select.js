@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.14.9 - 2016-03-04T11:02:00.838Z
+ * Version: 0.14.9 - 2016-03-04T11:30:07.252Z
  * License: MIT
  */
 
@@ -294,6 +294,7 @@ uis.controller('uiSelectCtrl',
   ctrl.focusser = undefined; //Reference to input element used to handle focus events
   ctrl.resetSearchInput = true;
   ctrl.multiple = undefined; // Initialized inside uiSelect directive link function
+  ctrl.forcePlaceholder= false;
   ctrl.disableChoiceExpression = undefined; // Initialized inside uiSelectChoices directive link function
   ctrl.tagging = {isActivated: false, fct: undefined};
   ctrl.taggingTokens = {isActivated: false, tokens: undefined};
@@ -314,6 +315,9 @@ uis.controller('uiSelectCtrl',
   ctrl.searchInput = $element.querySelectorAll('input.ui-select-search');
   if (ctrl.searchInput.length !== 1) {
     throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", ctrl.searchInput.length);
+  }
+  if($element.attr('force-placeholder') === 'true'){
+    ctrl.forcePlaceholder = true;
   }
 
   ctrl.isEmpty = function() {
@@ -1349,7 +1353,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
       ctrl.getPlaceholder = function(){
         //Refactor single?
-        if($select.selected && $select.selected.length) return;
+        if($select.selected && $select.selected.length && !$select.forcePlaceholder) return;
         return $select.placeholder;
       };
 
